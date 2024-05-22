@@ -1,0 +1,16 @@
+root/System2024Admin
+
+1. systemctl status mysql (Kiểm tra trạng thái của mysql)
+2. được 1 port của mysql (3306) : port này chỉ connect đc nội bộ ko connect được thông qua internet (http/https)
+3. muốn public port 3306 -> 
+	- Tạo rule cho firewall
+	- Nếu tường lửa tắt -> sử dụng iptables -> tạo rule để public port mysql
+
+4. Em sử dụng iptables để port mysql ra bên ngoài để app kết nối : sử dụng cmd 
+	iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
+
+5. Tạo user cho mysql -> kết nối remote sử dụng database:
+	
+6. Select user from mysql.user; xem user
+7. Tạo user CREATE USER 'thao'@'%' IDENTIFIED BY '12345679a@'; trong đó tên_tài_khoản@ip_address(%: là tất cả)
+8. Cấp quyền cho user : GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'tên_tài_khoản'@'ip_address' WITH GRANT OPTION;
